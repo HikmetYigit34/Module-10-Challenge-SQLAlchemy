@@ -1,25 +1,4 @@
 # Part 2: Design Your Climate App
-# Now that you’ve completed your initial analysis, you’ll design a Flask API based on the queries that you just developed. To do so, use Flask to create your routes as follows:
-# 1. /
-#   	o	Start at the homepage.
-#   	o	List all the available routes.
-# 2. /api/v1.0/precipitation
-#   	o	Convert the query results from your precipitation analysis (i.e. retrieve only the last 12 months of data) to a dictionary using date as the key and prcp as the value.
-#   	o	Return the JSON representation of your dictionary.
-# 3. /api/v1.0/stations
-#   	o	Return a JSON list of stations from the dataset.
-# 4. /api/v1.0/tobs
-#   	o	Query the dates and temperature observations of the most-active station for the previous year of data.
-#   	o	Return a JSON list of temperature observations for the previous year.
-# 5. /api/v1.0/<start> and /api/v1.0/<start>/<end>
-#   	o	Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start or start-end range.
-#   	o	For a specified start, calculate TMIN, TAVG, and TMAX for all the dates greater than or equal to the start date.
-#   	o	For a specified start date and end date, calculate TMIN, TAVG, and TMAX for the dates from the start date to the end date, inclusive.
-# Hints
-#   	•	Join the station and measurement tables for some of the queries.
-#   	•	Use the Flask jsonify function to convert your API data to a valid JSON response object.
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-
 
 # Import the dependencies. ----------------------------------------------------
 import datetime as dt
@@ -73,7 +52,7 @@ def welcome():
         f"<ul> When given the start and the end date (YYYY-MM-DD), calculate the MIN/AVG/MAX temperature for dates between the start and end date inclusive</li></ul><br/>"
     )
 	
-# List all the available routes------------------------------------------------------------------------------
+# Convert the query results from precipitation analysis------------------------
 @app.route("/api/v1.0/precipitation")
 def precipitation():
 	"""Return a list of rain fall for prior year"""
@@ -87,14 +66,14 @@ def precipitation():
 	precip = {date: prcp for date, prcp in precipitation}
 	return jsonify(precip)
 	
-#------------------------------------------------------------------------------	
+# Return a JSON list of stations from the dataset------------------------------
 @app.route("/api/v1.0/stations")
 def stations():
 	stations_query = session.query(Station.name, Station.station)
 	stations = pd.read_sql(stations_query.statement, stations_query.session.bind)
 	return jsonify(stations.to_dict())
 
-#------------------------------------------------------------------------------
+# Return a JSON list of temperature observations for the previous year-----------
 @app.route("/api/v1.0/tobs")
 def tobs():
 	"""Return a list of rain fall for prior year"""
@@ -108,7 +87,8 @@ def tobs():
 	t = {date: tobs for date, tobs in temps}
 	return jsonify(t)
 	
-#------------------------------------------------------------------------------
+# For a specified start, 
+# calculate TMIN, TAVG, and TMAX for all the dates greater than or equal to the start date
 @app.route("/api/v1.0/<start>")
 def get_data(start):
 	start_date= dt.datetime.strptime(start, '%Y-%m-%d')
@@ -121,7 +101,8 @@ def get_data(start):
 	all = list(np.ravel(all_data))
 	return jsonify(temp_stats_data)
 
-#------------------------------------------------------------------------------
+# For a specified start date and end date, 
+# calculate TMIN, TAVG, and TMAX for the dates from the start date to the end date, inclusive.
 @app.route("/api/v1.0/<start>/<end>")
 def get_start_end(start,end):
 	start_date= dt.datetime.strptime(start, '%Y-%m-%d')
