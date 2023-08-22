@@ -50,6 +50,7 @@ def welcome():
         f"<ul> When given the start date (YYYY-MM-DD), calculates the MIN/AVG/MAX temperature for all dates greater than and equal to the start date</li></ul><br/>"
         f"/api/v1.0/start/end<br/>"
         f"<ul> When given the start and the end date (YYYY-MM-DD), calculate the MIN/AVG/MAX temperature for dates between the start and end date inclusive</li></ul><br/>"
+		f'<li>if you enter url <span style"color:blue">127.0.0.1:5000/api/v1.0/2017-06-01/2017-06-30</span> you will get {"temps":[71.0,77.21989528795811,83.0]}'
     )
 	
 # Convert the query results from precipitation analysis------------------------
@@ -87,8 +88,9 @@ def tobs():
 	t = {date: tobs for date, tobs in temps}
 	return jsonify(t)
 	
-# For a specified start, 
-# calculate TMIN, TAVG, and TMAX for all the dates greater than or equal to the start date
+
+# For a specified start, ------------------------------------------------------
+# calculate TMIN, TAVG, and TMAX for all the dates greater than or equal to the start date	
 @app.route("/api/v1.0/<start>")
 def get_data(start):
 	start_date= dt.datetime.strptime(start, '%Y-%m-%d')
@@ -101,19 +103,17 @@ def get_data(start):
 	all = list(np.ravel(all_data))
 	return jsonify(temp_stats_data)
 
-# For a specified start date and end date, 
+# For a specified start date and end date, ------------------------------------
 # calculate TMIN, TAVG, and TMAX for the dates from the start date to the end date, inclusive.
 @app.route("/api/v1.0/<start>/<end>")
-def get_start_end(start,end):
-	start_date= dt.datetime.strptime(start, '%Y-%m-%d')
-	end_date= dt.datetime.strptime(end,'%Y-%m-%d')
-	last_year = dt.timedelta(days=365)
-	start = start_date-last_year
-	end = end_date-last_year
-	all_data = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-		filter(Measurement.date >= start).filter(Measurement.date <= end).all()
-	all = list(np.ravel(all_data))
-	return jsonify(all)
+def start_end(start=None, end=None):
+    sel = [func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)]
+    results = session.query(*sel).\
+        filter(Measurement.date >= start).\
+        filter(Measurement.date <= end).all()
+    temps = list(np.ravel(results))
+    return jsonify(temps=temps)	
+	
 	
 #------------------------------------------------------------------------------
 if __name__ == "__main__":
