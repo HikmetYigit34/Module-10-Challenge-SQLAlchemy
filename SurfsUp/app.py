@@ -47,10 +47,10 @@ def welcome():
         f"/api/v1.0/tobs<br/>"
         f"<ul> List of prior year temperatures from all stations</li></ul><br/>"
         f"/api/v1.0/start<br/>"
-        f"<ul> When given the start date (YYYY-MM-DD), calculates the MIN/AVG/MAX temperature for all dates greater than and equal to the start date</li></ul><br/>"
+        f"<ul> When given the start date (YYYY-MM-DD), calculates the MIN/AVG/MAX temperature for all dates greater than and equal to the start date</ul><br/>"
         f"/api/v1.0/start/end<br/>"
-        f"<ul> When given the start and the end date (YYYY-MM-DD), calculate the MIN/AVG/MAX temperature for dates between the start and end date inclusive</li></ul><br/>"
-		f"<li>if you enter url <span style'color:blue'>127.0.0.1:5000/api/v1.0/2017-06-01/2017-06-30</span> you will get {'temps':[71.0,77.21989528795811,83.0]}"
+        f"<ul> When given the start and the end date (YYYY-MM-DD), calculate the MIN/AVG/MAX temperature for dates between the start and end date inclusive"
+		f"<li>if you enter url 127.0.0.1:5000/api/v1.0/2017-06-01/2017-06-30 you will get temps:[71.0,77.21989528795811,83.0] </li></ul><br/>"
     )
 	
 # Convert the query results from precipitation analysis------------------------
