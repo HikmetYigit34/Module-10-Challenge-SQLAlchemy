@@ -37,7 +37,7 @@ app = Flask(__name__)
 def welcome():
     """List all available api routes."""
     return (
-	    f"<h1>Welcome!</h1>"
+	    f"<h1 style='color:blue; background:#eef; padding:10px'>Welcome to Hawaii Surf API </h1>"
         f"Available Routes:<br/>"
         f"<hr/>"
 
