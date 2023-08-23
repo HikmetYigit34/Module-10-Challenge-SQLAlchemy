@@ -39,19 +39,34 @@ def welcome():
     return (
 	    f"<h1>Welcome!</h1>"
         f"Available Routes:<br/>"
-        f"<br/>"
-        f"/api/v1.0/precipitation<br/>"
-        f"<ul>List of prior year rain totals from all stations</li></ul><br/>"
-        f"/api/v1.0/stations<br/>"
-        f"<ul> List of Station numbers and names</li></ul><br/>"
-        f"/api/v1.0/tobs<br/>"
-        f"<ul> List of prior year temperatures from all stations</li></ul><br/>"
-        f"/api/v1.0/start<br/>"
-        f"<ul> When given the start date (YYYY-MM-DD), calculates the MIN/AVG/MAX temperature for all dates greater than and equal to the start date</ul><br/>"
- 		f"<li>if you enter url 127.0.0.1:5000/api/v1.0/2017-06-01 you will get [69.0,78.04042553191489,87.0] </li></ul>"
-		f"/api/v1.0/start/end<br/>"
+        f"<hr/>"
+
+        f"/api/v1.0/precipitation &nbsp; &nbsp; "
+	    f"<a href='/api/v1.0/precipitation'>click here for link</a><br/>"
+        f"<ul>List of prior year rain totals from all stations"
+		f"</ul><hr/>"
+
+        f"/api/v1.0/stations &nbsp; &nbsp; "
+		f"<a href='/api/v1.0/stations'>click here for link</a><br/>"
+        f"<ul>List of Station numbers and names"
+		f"</ul><hr/>"
+    
+		f"/api/v1.0/tobs &nbsp; &nbsp; "
+		f"<a href='/api/v1.0/tobs'>click here for link</a><br/>"
+        f"<ul> List of prior year temperatures from all stations"
+		f"</ul><hr/>"
+
+        f"/api/v1.0/start &nbsp; &nbsp; "
+		f"<a href='/api/v1.0/2017-06-01'>click here for link</a><br/>"
+        f"<ul>When given the start date (YYYY-MM-DD), calculates the MIN/AVG/MAX temperature for all dates greater than and equal to the start date"
+ 		f"<li>if you enter url 127.0.0.1:5000/api/v1.0/2017-06-01 you will get [69.0,78.04042553191489,87.0] </li>"
+		f"</ul><hr/>"
+
+		f"/api/v1.0/start/end &nbsp; &nbsp; "
+		f"<a href='/api/v1.0/2017-06-01/2017-06-30'>click here for link</a><br/>"
         f"<ul> When given the start and the end date (YYYY-MM-DD), calculate the MIN/AVG/MAX temperature for dates between the start and end date inclusive"
-		f"<li>if you enter url 127.0.0.1:5000/api/v1.0/2017-06-01/2017-06-30 you will get temps:[71.0,77.21989528795811,83.0] </li></ul><br/>"
+		f"<li>if you enter url 127.0.0.1:5000/api/v1.0/2017-06-01/2017-06-30 you will get temps:[71.0,77.21989528795811,83.0]"
+		f"</ul><hr/>"
     )
 	
 # Convert the query results from precipitation analysis------------------------
