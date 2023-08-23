@@ -49,6 +49,7 @@ def welcome():
         f"/api/v1.0/start<br/>"
         f"<ul> When given the start date (YYYY-MM-DD), calculates the MIN/AVG/MAX temperature for all dates greater than and equal to the start date</ul><br/>"
         f"/api/v1.0/start/end<br/>"
+		f"<li>if you enter url 127.0.0.1:5000/api/v1.0/2017-06-01 you will get [69.0,78.04042553191489,87.0] </li></ul><br/>"
         f"<ul> When given the start and the end date (YYYY-MM-DD), calculate the MIN/AVG/MAX temperature for dates between the start and end date inclusive"
 		f"<li>if you enter url 127.0.0.1:5000/api/v1.0/2017-06-01/2017-06-30 you will get temps:[71.0,77.21989528795811,83.0] </li></ul><br/>"
     )
@@ -94,14 +95,17 @@ def tobs():
 @app.route("/api/v1.0/<start>")
 def get_data(start):
 	start_date= dt.datetime.strptime(start, '%Y-%m-%d')
-	last_year = dt.timedelta(days=365)
+	#end_date= dt.datetime.strptime(2017-8-23, '%Y-%m-%d')
+	#last_year = dt.timedelta(days=365)
+	end_date = dt.date(2017, 8, 23)
 	start = start_date
-	end = dt.date(2017, 8, 23)
+	end=end_date
+
 	all_data = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
 		filter(Measurement.date >= start).\
 		filter(Measurement.date <= end).all()
 	all = list(np.ravel(all_data))
-	return jsonify(temp_stats_data)
+	return jsonify(all)
 
 # For a specified start date and end date, ------------------------------------
 # calculate TMIN, TAVG, and TMAX for the dates from the start date to the end date, inclusive.
